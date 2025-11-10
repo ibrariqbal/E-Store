@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{margin: 0px; padding: 0px; box-sizing: border-box;}
+
+body{
+   font-family: "Montserrat", sans-serif;
+   font-optical-sizing: auto;
+   background: #f5f0f0;
+   color:black
+
+}
+.container{ width: 95%; margin: auto;}
+ 
+.bg-org{background: #ff5252;}
+
+.link:hover{color:  #ff5252;}
+
+.MuiBadge-badge{ background-color: #ff5252!important;}
+
+nav ul button{text-transform:capitalize !important; color: rgba(0,0,0,0.7)!important}
+nav ul button:hover{text-transform:capitalize !important; color:#ff5252!important; background-color: none !important;}
+
+.css-1orsvah-MuiTypography-root-MuiLink-root{text-decoration: none !important;}
+.css-1orsvah-MuiTypography-root-MuiLink-root:hover{color:#ff5252!important;;}
+.homeSliders .swiper-button-prev,.homeSliders .swiper-button-next {color: white !important; font-weight:bold !important;  width: 40px !important;height: 40px !important; min-width: 20px !important;}
+.homeSliders .swiper-button-prev::after,.homeSliders .swiper-button-next::after {font-size: 10px !important;}
+
+  .homeSlider {
+  overflow: inherit !important;
+   
+}
+
+.homeSlider .swiper-button-prev,
+.homeSlider .swiper-button-next {
+  padding: 5px !important;
+  width: 25px !important; 
+  height: 25px !important;
+  background: #ffffff !important;
+  color: black !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease-in-out !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25) !important;
+  z-index: 1 !important;
+}
+
+.homeSlider .swiper-button-prev::after,
+.homeSlider .swiper-button-next::after {
+  font-size: 19px !important;  
+  font-weight: 900 !important;
+}
+
+.homeSlider .swiper-button-prev:hover,
+.homeSlider .swiper-button-next:hover {
+  background: #ff5252 !important;
+  color: #ffffff !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 0 12px rgba(255, 82, 82, 0.6) !important;
+}
+
+.homeSlider .swiper-button-prev {
+  left: 1px !important;
+}
+
+.homeSlider .swiper-button-next {
+  right: 1px !important;
+}
+
+.homeSlider img:hover{transition: all !important; transform: scale(1.1) !important;}
+
+::-webkit-scrollbar{width: 8px !important; height: 8px !important;}
+::-webkit-scrollbar-thumb{background-color: #cccc !important;}
+::-webkit-scrollbar-track{background-color: white!important;}
+
+.css-1usuzwp-MuiButtonBase-root-MuiTab-root.Mui-selected { color : #ff5252 !important;}
+.css-1qltlow-MuiTabs-indicator {background-color: #ff5252 !important;}
+
+.ProductSlider {overflow-x: hidden !important}

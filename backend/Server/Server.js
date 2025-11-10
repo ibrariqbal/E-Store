@@ -23,5 +23,8 @@ app.post('/api/products/fashion', (req, res) => {
   res.json(newProduct);
 });
 
+
+
+
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
