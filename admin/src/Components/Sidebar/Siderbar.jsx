@@ -6,33 +6,46 @@ export default function Sidebar() {
   const [openProductMenu, setOpenProductMenu] = useState(false);
 
   const menu = [
-    { name: "Dashboard", icon: <Home size={20} /> },
+    { name: "Dashboard", icon: <Home size={20} />, path: "/" },
     { name: "Products", icon: <ShoppingBag size={20} />, hasSubmenu: true },
-    { name: "Customers", icon: <Users size={20} /> },
-    { name: "Settings", icon: <Settings size={20} /> },
+    { name: "Customers", icon: <Users size={20} />, path: "/customers" },
+    { name: "Settings", icon: <Settings size={20} />, path: "/settings" },
   ];
 
   return (
-    <div className="h-screen w-64 bg-gray-900 text-white flex flex-col p-4">
-      <h2 className="text-2xl font-bold mb-8 text-center">Admin Panel</h2>
+    <div className="flex flex-col min-h-screen w-64 bg-gray-900 text-white p-4">
+      <Link to="/">
+        <h2 className="text-2xl font-bold mb-8 text-center cursor-pointer">
+          Admin Panel
+        </h2>
+      </Link>
+
       <ul className="space-y-2">
         {menu.map((item, i) => (
           <React.Fragment key={i}>
-            <li
-              className="flex items-center justify-between cursor-pointer hover:bg-gray-700 p-2 rounded-lg transition"
-              onClick={() =>
-                item.hasSubmenu && setOpenProductMenu(!openProductMenu)
-              }
-            >
-              <div className="flex items-center gap-3">
+            {item.hasSubmenu ? (
+              <li
+                className="flex items-center justify-between cursor-pointer hover:bg-gray-700 p-2 rounded-lg transition"
+                onClick={() =>
+                  setOpenProductMenu(!openProductMenu)
+                }
+              >
+                <div className="flex items-center gap-3">
+                  {item.icon}
+                  <span>{item.name}</span>
+                </div>
+                <span>{openProductMenu ? "▲" : "▼"}</span>
+              </li>
+            ) : (
+              <li className="flex items-center gap-3 cursor-pointer hover:bg-gray-700 p-2 rounded-lg transition">
                 {item.icon}
-                <span>{item.name}</span>
-              </div>
+                <Link to={item.path} className="flex-1">
+                  {item.name}
+                </Link>
+              </li>
+            )}
 
-              {item.hasSubmenu && <span>{openProductMenu ? "▲" : "▼"}</span>}
-            </li>
-
-            {/* Submenu */}
+            {/* Submenu for Products */}
             {item.name === "Products" && openProductMenu && (
               <ul className="ml-10 mt-1 space-y-1">
                 <li className="flex items-center gap-2 cursor-pointer hover:bg-gray-700 p-2 rounded-lg transition">
