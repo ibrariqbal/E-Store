@@ -8,20 +8,16 @@ import Sidebar from "./Components/Sidebar/Siderbar";
 import Topbar from "./Components/Topbar/Topbar";
 import ProductList from "./Components/ProductList/ProductList";
 
-// ✅ Admin Layout (Sidebar + Topbar on every page)
 function AdminLayout({ onLogout }) {
   return (
     <div className="flex min-h-screen">
       <Sidebar />
 
-      {/* Right content area */}
       <div className="flex-1 flex flex-col bg-gray-100">
-        {/* ✅ Topbar visible on every page */}
         <div className="sticky top-0 z-50 bg-white shadow">
           <Topbar onLogout={onLogout} />
         </div>
 
-        {/* Page content */}
         <div className="flex-1 p-6 overflow-y-auto">
           <Outlet context={{ onLogout }} />
         </div>
@@ -31,14 +27,13 @@ function AdminLayout({ onLogout }) {
 }
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const handleLogout = () => setIsLoggedIn(false);
 
   return (
     <Router>
       {isLoggedIn ? (
         <Routes>
-          {/* ✅ All admin pages share the same layout */}
           <Route element={<AdminLayout onLogout={handleLogout} />}>
             <Route path="/" element={<AdminDashboard />} />
             <Route path="/add-new-products" element={<ProductManager />} />
