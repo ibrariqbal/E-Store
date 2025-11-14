@@ -8,8 +8,8 @@ const Fashion = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/products/fashion");
-      setProducts(res.data);
+    const res = await axios.get("http://localhost:5000/api/products/electronics");
+        setProducts(res.data);
     } catch (err) {
       console.error("Error fetching products:", err);
     } finally {

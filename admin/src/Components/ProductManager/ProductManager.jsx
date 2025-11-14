@@ -4,15 +4,17 @@ export default function ProductManager() {
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("Fashion"); // default
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
+  const [filterCategory, setFilterCategory] = useState("Fashion"); // default filter
 
-  // Fetch all products
-  const fetchProducts = async () => {
+  // Fetch products based on selected category
+  const fetchProducts = async (cat) => {
     try {
-      const res = await fetch("http://localhost:5000/api/products/fashion");
+      const url = `http://localhost:5000/api/products/${cat.toLowerCase()}`;
+      const res = await fetch(url);
       const data = await res.json();
       setProducts(data);
     } catch (err) {
@@ -20,11 +22,12 @@ export default function ProductManager() {
     }
   };
 
+  // On initial load
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    fetchProducts(filterCategory);
+  }, [filterCategory]);
 
-  // Add product with image
+  // Add product
   const handleAddProduct = async (e) => {
     e.preventDefault();
     if (!name || !price) return alert("Please fill all required fields.");
@@ -37,26 +40,24 @@ export default function ProductManager() {
     if (file) formData.append("image", file);
 
     try {
-      await fetch("http://localhost:5000/api/products/fashion", {
+      await fetch(`http://localhost:5000/api/products/${category.toLowerCase()}`, {
         method: "POST",
         body: formData,
       });
 
-      // Reset
       setName("");
       setPrice("");
-      setCategory("");
+      setCategory("Fashion");
       setDescription("");
       setFile(null);
       setPreview("");
 
-      fetchProducts();
+      fetchProducts(filterCategory); // refresh for current filtered category
     } catch (err) {
       console.error("Add Product Error:", err);
     }
   };
 
-  // Image preview before upload
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
@@ -65,9 +66,8 @@ export default function ProductManager() {
 
   return (
     <div className="container mx-auto p-6">
-      {/* Title */}
       <h2 className="text-3xl font-bold text-[#ff5252] mb-8 text-center">
-        Fashion Product Manager
+        All Product Manager
       </h2>
 
       {/* Add Product Form */}
@@ -79,7 +79,6 @@ export default function ProductManager() {
           Add New Product
         </h3>
 
-        {/* Inputs */}
         <div className="grid md:grid-cols-2 gap-4">
           <input
             type="text"
@@ -96,13 +95,14 @@ export default function ProductManager() {
             className="border p-3 rounded-lg w-full focus:ring-2 focus:ring-[#ff5252] outline-none"
           />
 
-          <input
-            type="text"
-            placeholder="Category"
+          <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="border p-3 rounded-lg w-full focus:ring-2 focus:ring-[#ff5252] outline-none"
-          />
+            className="border p-3 rounded-lg w-full focus:ring-2 focus:ring-[#ff5252] outline-none cursor-pointer"
+          >
+            <option value="Fashion">Fashion</option>
+            <option value="Electronics">Electronics</option>
+          </select>
 
           <input
             type="file"
@@ -112,7 +112,6 @@ export default function ProductManager() {
           />
         </div>
 
-        {/* Image Preview */}
         {preview && (
           <div className="mt-5 flex justify-center">
             <img
@@ -123,7 +122,6 @@ export default function ProductManager() {
           </div>
         )}
 
-        {/* Description */}
         <textarea
           placeholder="Description"
           value={description}
@@ -132,7 +130,6 @@ export default function ProductManager() {
           rows="3"
         ></textarea>
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="mt-6 w-full bg-[#ff5252] hover:bg-[#e04848] text-white font-semibold py-3 rounded-lg transition-all"
@@ -141,10 +138,21 @@ export default function ProductManager() {
         </button>
       </form>
 
+      {/* Filter by Category */}
+      <div className="mb-4 flex gap-3 items-center">
+        <span className="font-semibold text-gray-700">Filter by Category:</span>
+        <select
+          value={filterCategory}
+          onChange={(e) => setFilterCategory(e.target.value)}
+          className="border p-2 rounded-lg focus:ring-2 focus:ring-[#ff5252] outline-none cursor-pointer"
+        >
+          <option value="Fashion">Fashion</option>
+          <option value="Electronics">Electronics</option>
+        </select>
+      </div>
+
       {/* Product List */}
-      <h3 className="text-2xl font-semibold text-[#ff5252] mb-3">
-        Product List
-      </h3>
+      <h3 className="text-2xl font-semibold text-[#ff5252] mb-3">Product List</h3>
 
       {products.length === 0 ? (
         <p className="text-gray-500">No products yet.</p>
@@ -182,9 +190,7 @@ export default function ProductManager() {
                   <td className="p-3 border-b font-medium">{p.name}</td>
                   <td className="p-3 border-b">${p.price}</td>
                   <td className="p-3 border-b">{p.category}</td>
-                  <td className="p-3 border-b text-gray-600">
-                    {p.description}
-                  </td>
+                  <td className="p-3 border-b text-gray-600">{p.description}</td>
                 </tr>
               ))}
             </tbody>
